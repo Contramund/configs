@@ -1,0 +1,234 @@
+* Basic_keybindings
+#+BEGIN_SRC emacs-lisp
+  (use-package ergoemacs-mode
+      :ensure t
+      :init
+      (setq ergoemacs-theme nil)
+      (setq ergoemacs-keyboard-layout "us")
+      :config
+      (global-set-key (kbd "C-M-i") nil)
+      (define-key ergoemacs-keymap (kbd "C-M-i") nil)  
+      (ergoemacs-mode 1))
+
+  (use-package reverse-im
+      :ensure t
+      :custom
+      (reverse-im-input-methods '("russian-computer"))
+      :config
+      (reverse-im-mode t))
+#+END_SRC
+* Basic_editor_preferences
+** Editor's_menu
+#+BEGIN_SRC emacs-lisp
+  ;; Inhibit startup/splash screen
+  (setq inhibit-splash-screen   t)
+  (setq ingibit-startup-message t)
+
+  ;; Disable GUI components
+  (tooltip-mode      -1)
+  (menu-bar-mode     -1) ;; no graphic menues
+  (tool-bar-mode     -1) ;; no tool-bar
+  (scroll-bar-mode   -1) ;; no scroll-line
+  (blink-cursor-mode -1) ;; no cursor blinking
+  (setq use-dialog-box     nil) ;; no graphic dialoges-boxes or windows - use  minibufer
+  (setq redisplay-dont-pause t)  ;; better bufers' graphics
+
+  ;; Display file size/time in mode-line
+  (setq display-time-24hr-format t) ;; 24-hour format in mode-line
+  (display-time-mode             t) ;; show clocs in mode-line
+  (size-indication-mode          t) ;; file size in %
+
+  ;; Clipboard settings
+  (setq x-select-enable-clipboard t) ;; conjoint buffer with OS
+
+  ;; End of file newlines
+  (setq require-final-newline    t) ;; add empty-line in the end trough saving
+  (setq next-line-add-newlines nil) ;; do not end new-line in the end when moving cursor by arrows
+#+END_SRC
+** Buffers_preferences
+#+BEGIN_SRC emacs-lisp
+  ;; automatic closure of (),{},[] with putting cursur in
+  (electric-pair-mode 1)
+
+  (setq show-paren-style 'expression)
+  (show-paren-mode t)
+
+  ;; Disable backup/autosave files
+  (setq make-backup-files        nil)
+  (setq auto-save-default        nil)
+  (setq auto-save-list-file-name nil)
+
+  ;; Fringe settings
+  (fringe-mode '(8 . 0)) ;; limit text fron-left only
+  (setq-default indicate-empty-lines t) ;; indicate empty-lines trough glifes
+  (setq-default indicate-buffer-boundaries 'left) ;; only-left indication
+
+  ;; Line wrapping
+  (setq word-wrap          t) ;; word wrapping
+  (global-visual-line-mode t)
+
+  ;; Syntax highlighting
+  (require 'font-lock)
+  (global-font-lock-mode             t) ;; powered on since Emacs-22
+  (setq font-lock-maximum-decoration t)
+
+  ;; Indent settings
+  (setq-default indent-tabs-mode nil) ;; TAB off
+  (setq-default tab-width          4) ;; TAB = 4 SPACE
+  (setq-default c-basic-offset     4)
+  (setq-default standart-indent    4) ;; standart shift - 4 SPACE
+  (setq-default lisp-body-indent   4) ;; move Lisp-expressions by 4 SPACE
+  (global-set-key (kbd "RET") 'newline-and-indent) ;; with Enter move cursor then make shift
+  (setq lisp-indent-function  'common-lisp-indent-function)
+
+  ;; Scrolling settings
+  (setq scroll-step               1) ;; move up-down by 1 row
+  (setq scroll-margin            10) ;; move buffer up-down when cursor in 10 steps from the edge  
+  (setq scroll-conservatively 10000)
+
+  ;; display line numbers
+  (global-linum-mode t)
+  (add-hook 'pdf-view-mode-hook (lambda() (linum-mode -1)))
+  (setq linum-format "%d ")
+
+  (defalias 'yes-or-no-p 'y-or-n-p)
+
+  (defadvice switch-to-buffer (after activate-input-method activate)
+    (activate-input-method 'TeX))
+  (add-hook 'minibuffer-setup-hook (lambda () (set-input-method 'TeX)))
+#+END_SRC
+** Org-mode_buffers
+#+BEGIN_SRC emacs-lisp
+  (use-package org-bullets
+      :ensure t
+      :config
+      (add-hook 'org-mode-hook(lambda () (org-bullets-mode))))
+#+END_SRC
+** TODO Auto-complection
+ #+BEGIN_SRC emacs-lisp
+   (use-package auto-complete
+       :ensure t
+       :init
+         (use-package popup
+           :ensure t)
+         (ac-config-default))
+
+   (use-package yasnippet
+       :ensure t
+       :init
+       (use-package yasnippet-snippets
+           :ensure t)
+       (yas-reload-all)
+       (yas-global-mode t)
+       :config
+       (define-key yas-minor-mode-map (kbd "SPC") yas-maybe-expand))
+ #+END_SRC
+* Basic_navigation
+#+BEGIN_SRC emacs-lisp
+  (use-package which-key
+    :ensure t
+    :init
+       (which-key-mode))
+
+  (use-package ido
+    :ensure t
+    :init
+    (progn
+        (ido-mode 1)
+        (use-package smex
+            :ensure t )
+        (use-package ido-vertical-mode
+            :ensure t
+            :init (ido-vertical-mode 1)))
+    )
+
+   (setq iswitchb-buffer-ignore '("*scratch*" "*Backtrace*"))
+   (global-set-key (kbd "C-M-b") 'ido-switch-buffer)
+#+END_SRC
+* TODO Helm 
+* Pdf-viewer
+#+BEGIN_SRC emacs-lisp
+  (use-package pdf-tools
+      :ensure t
+      :pin manual
+      :init
+      (pdf-tools-install)
+      :config
+      (add-hook 'pdf-view-mode-hook (lambda() (linum-mode -1)))
+      (setq-default pdf-view-display-size 'fit-width)
+      (setq pdf-annot-activate-created-annotations t)
+      (setq pdf-view-continuous nil)
+      (define-key pdf-view-mode-map (kbd "<right>") (lambda () (interactive)
+                                                            (pdf-view-next-page)))
+      (define-key pdf-view-mode-map (kbd "<left>") (lambda () (interactive)
+                                                           (pdf-view-previous-page)))
+      (define-key pdf-view-mode-map (kbd "C-f") 'isearch-forward)
+      (define-key pdf-view-mode-map (kbd "k") nil))
+
+  (setq TeX-view-program-selection '((output-pdf "PDF Tools"))
+        TeX-view-program-list '(("PDF Tools" TeX-pdf-tools-sync-view))
+        TeX-source-correlate-start-server t)
+  (add-hook 'TeX-after-compilation-finished-functions
+        #'TeX-revert-document-buffer)
+#+END_SRC
+* Latex
+#+BEGIN_SRC emacs-lisp
+  (unless (package-installed-p 'auctex)
+    (package-refresh-contents)
+    (package-install 'auctex))
+
+  (setq LaTeX-electric-env-pair-mode t)
+  (setq TeX-electric-math (cons "$" "$"))
+  (setq LaTeX-indent-level 4)
+  (setq LaTeX-item-indent 4)
+  (setq TeX-brace-indent-level 4)
+  (setq indent-tabs-mode t)
+
+#+END_SRC
+* Shell
+  #+BEGIN_SRC emacs-lisp
+  (when (require 'bash-completion nil t)
+    (setq eshell-default-completion-function 'eshell-bash-completion))
+
+  (defun eshell-bash-completion ()
+    (setq-local bash-completion-nospace t)
+    (while (pcomplete-here
+            (nth 2 (bash-completion-dynamic-complete-nocomint (save-excursion (eshell-bol) (point)) (point))))))
+
+  (add-hook 'eshell-mode-hook (lambda ()
+     (setq pcomplete-cycle-completions nil)))
+
+  (add-hook 'eshell-mode-hook
+            (lambda ()
+              (define-key eshell-mode-map (kbd "C-M-i") 'eshell-previous-matching-input-from-input)))
+
+  (add-hook 'eshell-mode-hook
+            (lambda ()
+              (define-key eshell-mode-map (kbd "C-M-k") 'eshell-next-matching-input-from-input)))
+
+  (global-set-key (kbd "C-M-p") 'eshell)
+
+  (setq initial-buffer-choice 'eshell)
+  #+END_SRC 
+* Edit with Emacs
+#+BEGIN_SRC emacs-lisp
+  ;; to use "Edit with Emacs" add-on in Firefox
+  (use-package edit-server
+    :ensure t
+    :commands edit-server-start
+    :init (if after-init-time
+                (edit-server-start)
+              (add-hook 'after-init-hook
+                        #'(lambda() (edit-server-start) (set-input-method 'german-prefix))))
+    :config
+    (setq edit-server-new-frame-alist
+          '((name . "Edit with Emacs FRAME")
+            (top . 200)
+            (left . 200)
+            (width . 80)
+            (height . 25)
+            (minibuffer . t)
+            (menu-bar-lines . t)
+            (window-system . x)))
+    (add-hook 'edit-server-start-hook (lambda() (activate-input-method 'TeX))))
+#+END_SRC

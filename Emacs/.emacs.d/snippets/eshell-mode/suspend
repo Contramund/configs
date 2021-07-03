@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: suspend
+# key: sus
+# --
+systemctl suspend

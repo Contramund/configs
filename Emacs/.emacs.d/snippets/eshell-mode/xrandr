@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: xrandr
+# key: xrandr
+# --
+xrandr --output HDMI-1 --primary

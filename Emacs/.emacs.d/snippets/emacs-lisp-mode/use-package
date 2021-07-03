@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: use-package
+# key: UP
+# --
+(use-package $1
+    :ensure t
+    :init
+    $2
+    :config
+    $3)

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: wacom
+# key: wacom
+# --
+xsetwacom --set "Wacom One by Wacom M Pen stylus" MapToOutput 1280x1024+0+0
