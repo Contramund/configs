@@ -1,4 +1,4 @@
-" some preferences
+" Some preferences
 filetype plugin indent on
 set tabstop=4
 set shiftwidth=4
@@ -14,16 +14,14 @@ set nowrap
 syntax enable 
 
 
-" russian support
+" Russian support
 let g:XkbSwitchEnabled = 1
 let g:XkbSwitchLib = "/usr/local/lib/libxkbswitch.so"
-let g:XkbSwitchIMappings = ['ru']
-" echo libcall(g:XkbSwitchLib, 'Xkb_Switch_getXkbLayout', 'ru')
-" call libcall(g:XkbSwitchLib, 'Xkb_Switch_setXkbLayout', 'en')
 
 
-" basic keybinds
+" Basic keybinds
 imap kk <C-o>
+
 " Make Ranger replace netrw and be the file explorer
 let g:rnvimr_ex_enable = 1
 let g:rnvimr_action = {
@@ -34,7 +32,6 @@ let g:rnvimr_action = {
             \ 'yw': 'EmitRangerCwd'
             \ }
 nmap <Space>r :RnvimrToggle<CR>
-" nnoremap <C-n> :NERDTreeToggle<CR>
 imap <c-space> <Esc>
 vnoremap <C-v> "+P
 vnoremap <C-c> "+y
@@ -44,28 +41,28 @@ nnoremap <Down> :resize -2<CR>
 nnoremap <Left> :vertical resize +2<CR>
 nnoremap <Right> :vertical resize -2<CR>
 
-nnoremap <C-g> :Goyo<CR>
+nmap <Space>w <Plug>VimwikiIndex
 
+" Goyo settings
+" nnoremap <C-g> :Goyo<CR>
+" function! s:goyo_enter()
+"    set noshowmode
+"    set noshowcmd
+"    set nocursorline
+"    CocDisable
+"    Limelight
+" endfunction
 
-"Goyo settings
-function! s:goyo_enter()
-    set noshowmode
-    set noshowcmd
-    set nocursorline
-    CocDisable
-    Limelight
-endfunction
+" function! s:goyo_leave()
+"    set showmode
+"    set showcmd
+"    set cursorline
+"    CocEnable
+"    Limelight!
+" endfunction
 
-function! s:goyo_leave()
-    set showmode
-    set showcmd
-    set cursorline
-    CocEnable
-    Limelight!
-endfunction
-
-autocmd! User GoyoEnter nested call <SID>goyo_enter()
-autocmd! User GoyoLeave nested call <SID>goyo_leave() 
+" autocmd! User GoyoEnter nested call <SID>goyo_enter()
+" autocmd! User GoyoLeave nested call <SID>goyo_leave() 
 
 
 "tab-settings
@@ -99,6 +96,11 @@ call plug#begin('~/.vim/plugged')
     Plug 'junegunn/limelight.vim'
     Plug 'kevinhwang91/rnvimr', {'do': 'make sync'}
     Plug 'ryanoasis/vim-devicons'
+    Plug 'vimwiki/vimwiki'
+    Plug 'tbabej/taskwiki'
+    Plug 'plasticboy/vim-markdown'
+    Plug 'whonore/Coqtail'
+    Plug 'lyokha/vim-xkbswitch'
 call plug#end()
 
 
@@ -131,6 +133,17 @@ let &t_SR.="\e[3 q" "SR = режим замены
 let &t_EI.="\e[1 q" "EI = нормальный режим
 
 
+" vimwiki
+let g:vimwiki_list = [{'path':'/home/contramund/.config/nvim/vimwiki', 'syntax':'markdown', 'ext':'.md'}]
+let g:vimwiki_ext2syntax = {'.md':'markdown', '.markdown':'markdown', '.mdown':'markdown'}
+
+"make vimwiki markdown links as [text](text.md) instad of [text](text)
+let g:vimwiki_markdown_link_ext = 1 
+
+let g:taskwiki_markup_syntax = 'markdown'
+let g:markdown_folding = 1 
+
+
 "----------------------------------------------------------
 "--------------------CocConfig-----------------------------
 "----------------------------------------------------------
@@ -143,7 +156,7 @@ set nobackup
 set nowritebackup
 
 " Give more space for displaying messages.
-set cmdheight=2
+" set cmdheight=2
 
 " Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
 " delays and poor user experience.
@@ -294,3 +307,8 @@ nnoremap <silent><nowait> <space>s  :<C-u>CocList -I symbols<cr>
 nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
 " Do default action for previous item.
 nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
+
+
+"----------------------------------------------------------
+"----------------- Xkb-Switch Settings --------------------
+"----------------------------------------------------------
