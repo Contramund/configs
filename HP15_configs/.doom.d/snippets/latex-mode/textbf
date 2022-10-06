@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: textbf
+# key: tb
+# group: theorems
+# --
+\textbf{ $1 } $0

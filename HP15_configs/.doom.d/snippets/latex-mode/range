@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: range
+# key: rg
+# group: theorems
+# --
+$1 , \dots, $0

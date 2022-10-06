@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: proof
+# key: pr
+# group: theorems
+# --
+\begin{proof}$1
+    $2
+\end{proof} 
+$0
