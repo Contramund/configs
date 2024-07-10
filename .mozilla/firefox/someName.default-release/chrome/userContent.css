@@ -1,0 +1,50 @@
+
+@-moz-document url-prefix(about:home), url-prefix(about:newtab) {
+	.click-target-container *, .top-sites-list * {
+		color: #fff !important ;
+		text-shadow: 2px 2px 2px #000 !important;
+	}
+
+	body {
+		background: url("wallpaper_your_name.jpg") !important ;
+		background-size: cover !important;
+	}
+
+    .top-site-outer .tile {
+        background-color: rgba(0,0,0,0.4) !important;
+    }
+
+    .top-sites-list:not(.dnd-active) .top-site-outer:is(.active, :focus, :hover) {
+        background: rgba(70,70,70,0.6) !important;
+    }
+
+    :root {
+        --newtab-background-color-secondary: none !important;
+    }
+
+    .search-wrapper .search-handoff-button {
+        background: rgba(20,20,20,0.7) !important;
+    }
+
+    .logo-and-wordmark {
+        .logo {
+            display: none !important;
+        }
+
+        .wordmark {
+            background: none !important;
+            inline-size: fit-content !important;
+            margin-right: 5% !important;
+        }
+
+        .wordmark::before {
+            block-size: fit-content !important;
+            content: "Oh, shit! Here we go again..." !important;
+            text-align: center !important;
+            font-size: 50px !important;
+            font-style: italic !important;
+            font-weight: bold !important;
+            text-shadow: 7px 7px 7px #000 !important;
+        }
+    }
+}

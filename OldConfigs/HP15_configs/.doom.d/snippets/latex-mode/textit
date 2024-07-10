@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: textit
+# key: tt
+# group: theorems
+# --
+\textit{ $1 } $0

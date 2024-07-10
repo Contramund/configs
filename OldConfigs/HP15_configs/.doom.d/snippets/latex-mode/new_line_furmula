@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: new_line_formula
+# key: nl
+# group: theorems
+# --
+$$
+    $1
+$$
+$0

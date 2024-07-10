@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: lemma
+# key: lem
+# group: theorems
+# --
+\begin{lemma}$1
+    $2
+\end{lemma} 
+$0

@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: def_gen
+# key: gen
+# group: theorems
+# --
+\\{ $1 \mid $2 \\} $0

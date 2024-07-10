@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: theorem
+# key: th
+# group: theorems
+# --
+\begin{theorem}$1
+    $2
+\end{theorem} 
+$0

@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: def_set
+# key: set
+# group: theorems
+# --
+\\{$1\\}$0

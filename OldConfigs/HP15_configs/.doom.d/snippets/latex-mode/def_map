@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: def_map
+# key: map
+# group: theorems
+# --
+$1 \colon $2 \to $0
